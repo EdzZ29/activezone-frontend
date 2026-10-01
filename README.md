@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ActiveZone Butuan Fitness Studio — Website
 
-## Getting Started
-
-First, run the development server:
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Lucide icons
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editing content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| What | Where |
+| --- | --- |
+| Address, phone, hours, rating, map links, social links | `lib/site.ts` |
+| Membership prices (`price: "XXX"`) and inclusions | `lib/content.ts` → `plans` |
+| Classes, schedules, coaches per class | `lib/content.ts` → `classes` |
+| Coach profiles | `lib/content.ts` → `trainers` |
+| Gallery, page photos | `lib/content.ts` → `gallery`, `images` |
+| Reviews | `lib/content.ts` → `testimonials` |
+| Brand colours / fonts | `app/globals.css` (`@theme`), `app/layout.tsx` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Set `NEXT_PUBLIC_SITE_URL` to the live domain for correct canonical, sitemap and Open Graph URLs.
 
-## Learn More
+## Before launch
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Photos** are Unsplash stock placeholders. Add ActiveZone's own photos to `public/photos/` and point the entries in `lib/content.ts` at them (e.g. `"/photos/free-weights.jpg"`).
+- **Prices, class schedules, coach names and social URLs** are placeholders until confirmed.
+- **Inquiry form** has no backend: it validates and then offers to send the inquiry by SMS or call. Hook it up in `app/components/ContactForm.tsx` (`onSubmit`) once an API is available.
