@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ArrowRight, MapPin, Phone } from "lucide-react";
+import { ArrowRight, CircleUserRound, MapPin, Phone } from "lucide-react";
 import { joinHref, navLinks, site } from "@/lib/site";
 import { Logo } from "./Logo";
 import { ButtonLink } from "./ui/Button";
@@ -52,7 +52,7 @@ export function Navbar() {
         >
           <Logo compact={scrolled} />
 
-          <ul className="hidden items-center gap-1 lg:flex">
+          <ul className="hidden items-center gap-1 xl:flex">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               return (
@@ -60,14 +60,14 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`relative px-3 py-2 font-display text-[0.74rem] font-semibold uppercase tracking-[0.14em] transition-colors xl:px-4 ${
+                    className={`relative whitespace-nowrap px-2.5 py-2 font-display text-[0.74rem] font-semibold uppercase tracking-[0.12em] transition-colors ${
                       active ? "text-white" : "text-zinc-400 hover:text-white"
                     }`}
                   >
                     {link.label}
                     <span
                       aria-hidden
-                      className={`absolute inset-x-3 -bottom-0.5 h-[2px] origin-left bg-brand transition-transform duration-300 xl:inset-x-4 ${
+                      className={`absolute inset-x-2.5 -bottom-0.5 h-[2px] origin-left bg-brand transition-transform duration-300 ${
                         active ? "scale-x-100" : "scale-x-0"
                       }`}
                     />
@@ -77,7 +77,13 @@ export function Navbar() {
             })}
           </ul>
 
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-3">
+            <Link
+              href="/login"
+              className="hidden min-h-12 shrink-0 items-center gap-2 whitespace-nowrap border border-white/20 px-4 font-display text-[0.74rem] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:border-brand hover:text-brand sm:inline-flex"
+            >
+              <CircleUserRound size={17} aria-hidden /> Log in
+            </Link>
             <div className="hidden sm:block">
               <ButtonLink href={joinHref}>Join Now</ButtonLink>
             </div>
@@ -88,7 +94,7 @@ export function Navbar() {
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={open ? "Close menu" : "Open menu"}
-              className="relative -mr-2 flex size-12 items-center justify-center lg:hidden"
+              className="relative -mr-2 flex size-12 items-center justify-center xl:hidden"
             >
               <span className="relative block h-3.5 w-6">
                 <span
@@ -112,10 +118,10 @@ export function Navbar() {
         </nav>
       </header>
 
-      {/* Mobile menu — kept outside the header: its backdrop-filter would trap fixed children */}
+      {/* Mobile menu, kept outside the header: its backdrop-filter would trap fixed children */}
       <div
         id="mobile-menu"
-        className={`fixed inset-x-0 bottom-0 z-40 overflow-y-auto bg-ink-950 transition-[opacity,visibility] duration-300 lg:hidden ${
+        className={`fixed inset-x-0 bottom-0 z-40 overflow-y-auto bg-ink-950 transition-[opacity,visibility] duration-300 xl:hidden ${
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
         style={{ top: scrolled ? "4rem" : "5rem" }}
@@ -161,6 +167,16 @@ export function Navbar() {
               onClick={() => setOpen(false)}
             >
               Join ActiveZone
+            </ButtonLink>
+            <ButtonLink
+              href="/login"
+              variant="outline"
+              size="lg"
+              className="w-full"
+              icon={<CircleUserRound size={16} />}
+              onClick={() => setOpen(false)}
+            >
+              Log in
             </ButtonLink>
             <ButtonLink
               href={site.phone.href}

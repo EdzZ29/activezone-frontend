@@ -2,7 +2,8 @@
 
 import { Suspense, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
-import { ArrowRight, MessageSquareText, Pencil, Phone, TriangleAlert } from "lucide-react";
+import { ArrowRight, CircleCheck, LoaderCircle, MessageSquareText, Pencil, Phone, TriangleAlert } from "lucide-react";
+import { api, ApiError } from "@/lib/api/client";
 import { classes, inquiryTypes, type InquiryType } from "@/lib/content";
 import { site } from "@/lib/site";
 import { buttonClasses } from "./ui/Button";
@@ -70,14 +71,17 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 function InquiryForm({ initial }: { initial: FormValues }) {
   const [values, setValues] = useState<FormValues>(initial);
   const [errors, setErrors] = useState<Errors>({});
-  const [submitted, setSubmitted] = useState(false);
+  // "sent": saved to the ActiveZone dashboard. "offline": the API could not be reached, so offer SMS instead.
+  const [submitted, setSubmitted] = useState<"sent" | "offline" | null>(null);
+  const [sending, setSending] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const update = <K extends keyof FormValues>(key: K, value: FormValues[K]) => {
     setValues((v) => ({ ...v, [key]: value }));
     if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const found = validate(values);
     setErrors(found);
@@ -86,23 +90,55 @@ function InquiryForm({ initial }: { initial: FormValues }) {
       document.getElementById(`inq-${first}`)?.focus();
       return;
     }
-    // No backend yet: the inquiry stays in the browser. Replace this with a request
-    // to the ActiveZone API (e.g. POST /inquiries) once it's available.
-    setSubmitted(true);
+    setSending(true);
+    setServerError(null);
+    try {
+      await api("/inquiries", {
+        method: "POST",
+        body: { name: values.name.trim(), phone: values.phone.trim(), email: values.email.trim(), type: values.inquiry, message: values.message.trim() },
+      });
+      setSubmitted("sent");
+    } catch (err) {
+      // Validation problems are shown on the form; anything else falls back to SMS/call.
+      if (err instanceof ApiError && err.status === 400) setServerError(err.message);
+      else setSubmitted("offline");
+    } finally {
+      setSending(false);
+    }
   };
 
-  if (submitted) {
+  if (submitted === "sent") {
+    return (
+      <div role="status" className="flex h-full flex-col justify-center border border-brand/30 bg-ink-900 p-8 md:p-12">
+        <CircleCheck size={36} className="text-brand" aria-hidden />
+        <h3 className="mt-5 font-display text-3xl font-extrabold uppercase leading-tight tracking-tight text-white">
+          Thanks, {values.name.trim().split(" ")[0]}! Inquiry sent.
+        </h3>
+        <p className="mt-4 leading-relaxed text-zinc-300">
+          The ActiveZone team will get back to you at <span className="font-semibold text-white">{values.phone.trim()}</span>.
+          Need an answer sooner? Give us a call.
+        </p>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href={site.phone.href} className={buttonClasses("outline", "lg", "flex-1")}>
+            <Phone size={18} aria-hidden /> Call {site.phone.display}
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  if (submitted === "offline") {
     const smsHref = `${site.phone.sms}?&body=${encodeURIComponent(toSmsBody(values))}`;
     return (
       <div role="status" className="flex h-full flex-col justify-center border border-brand/30 bg-ink-900 p-8 md:p-12">
-        <p className="font-display text-[0.72rem] font-bold uppercase tracking-[0.28em] text-brand">Almost there</p>
+        <p className="font-display text-[0.72rem] font-bold uppercase tracking-[0.28em] text-amber-200">Send by text instead</p>
         <h3 className="mt-4 font-display text-3xl font-extrabold uppercase leading-tight tracking-tight text-white">
-          Thanks, {values.name.trim().split(" ")[0]}! Your inquiry is ready.
+          We couldn&apos;t send it online
         </h3>
         <p className="mt-5 flex gap-3 border-l-2 border-amber-300/70 pl-4 text-sm leading-relaxed text-zinc-300">
           <TriangleAlert size={18} className="mt-0.5 shrink-0 text-amber-300" aria-hidden />
-          Online inquiries aren&apos;t connected yet, so this has not been sent to ActiveZone. Send it as a text
-          message below, or give us a call, and the team will get back to you.
+          Our online form isn&apos;t reachable right now, so your inquiry has not been sent. Send it as a text
+          message below (it&apos;s already written for you), or give us a call.
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a href={smsHref} className={buttonClasses("primary", "lg", "flex-1")}>
@@ -114,7 +150,7 @@ function InquiryForm({ initial }: { initial: FormValues }) {
         </div>
         <button
           type="button"
-          onClick={() => setSubmitted(false)}
+          onClick={() => setSubmitted(null)}
           className="mt-6 inline-flex items-center gap-2 self-start text-sm font-semibold text-zinc-400 hover:text-white"
         >
           <Pencil size={14} aria-hidden /> Edit inquiry
@@ -220,8 +256,18 @@ function InquiryForm({ initial }: { initial: FormValues }) {
         </div>
       </div>
 
-      <button type="submit" className={buttonClasses("primary", "lg", "mt-8 w-full sm:w-auto")}>
-        Send Inquiry <ArrowRight size={18} aria-hidden />
+      {serverError && (
+        <p role="alert" className="mt-6 text-sm text-red-300">
+          {serverError}
+        </p>
+      )}
+      <button
+        type="submit"
+        disabled={sending}
+        className={buttonClasses("primary", "lg", "mt-8 w-full disabled:opacity-70 sm:w-auto")}
+      >
+        {sending ? "Sending…" : "Send Inquiry"}
+        {sending ? <LoaderCircle size={18} className="animate-spin" aria-hidden /> : <ArrowRight size={18} aria-hidden />}
       </button>
     </form>
   );

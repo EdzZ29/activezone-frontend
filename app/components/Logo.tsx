@@ -3,14 +3,16 @@ import Link from "next/link";
 
 type LogoProps = {
   compact?: boolean;
+  /** Tighter subtitle for narrow spaces like the dashboard sidebar. */
+  tight?: boolean;
   className?: string;
 };
 
-export function Logo({ compact = false, className = "" }: LogoProps) {
+export function Logo({ compact = false, tight = false, className = "" }: LogoProps) {
   return (
     <Link
       href="/"
-      aria-label="ActiveZone Butuan Fitness Studio — home"
+      aria-label="ActiveZone Butuan Fitness Studio home"
       className={`group flex items-center gap-3 ${className}`}
     >
       <Image
@@ -25,7 +27,11 @@ export function Logo({ compact = false, className = "" }: LogoProps) {
         <span className="font-display text-[1.05rem] font-extrabold tracking-[0.06em] text-white md:text-lg">
           ACTIVEZONE
         </span>
-        <span className="mt-1 font-display text-[0.55rem] font-semibold tracking-[0.3em] text-zinc-400 md:text-[0.6rem]">
+        <span
+          className={`mt-1 whitespace-nowrap font-display text-[0.55rem] font-semibold text-zinc-400 ${
+            tight ? "tracking-[0.14em]" : "tracking-[0.3em] md:text-[0.6rem]"
+          }`}
+        >
           BUTUAN FITNESS STUDIO
         </span>
       </span>

@@ -17,7 +17,7 @@ export function Footer() {
         <div>
           <Logo />
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-zinc-400">
-            {site.name} — a clean, welcoming fitness studio in the heart of Butuan City.
+            {site.name} is a clean, welcoming fitness studio in the heart of Butuan City.
           </p>
           <p className="mt-6 font-display text-[0.7rem] font-bold uppercase tracking-[0.16em] text-brand">
             {site.tagline}

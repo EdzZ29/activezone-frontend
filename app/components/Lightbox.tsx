@@ -44,7 +44,7 @@ export function Lightbox({ images, index, onClose, onIndexChange }: LightboxProp
     <div
       role="dialog"
       aria-modal="true"
-      aria-label={`${image.category} — image ${index + 1} of ${count}`}
+      aria-label={`${image.category}, image ${index + 1} of ${count}`}
       className="fixed inset-0 z-[60] flex flex-col bg-black/95 backdrop-blur-sm"
       onClick={onClose}
       onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}

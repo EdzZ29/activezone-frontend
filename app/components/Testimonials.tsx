@@ -59,7 +59,7 @@ export function Testimonials() {
           </ButtonLink>
         </Reveal>
 
-        {/* Review excerpts — swipeable on mobile */}
+        {/* Review excerpts, swipeable on mobile */}
         <div className="min-w-0">
           <ul
             ref={trackRef}

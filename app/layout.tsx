@@ -1,21 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import { site } from "@/lib/site";
-import { Footer } from "./components/Footer";
-import { JsonLd } from "./components/JsonLd";
-import { Navbar } from "./components/Navbar";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Open Sans for all text (variable font, weights 300–800).
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin"],
-  display: "swap",
-});
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  weight: ["600", "700", "800", "900"],
   display: "swap",
 });
 
@@ -62,15 +53,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${montserrat.variable} antialiased`}>
+    <html lang="en" className={`${openSans.variable} antialiased`}>
       <body className="min-h-full bg-ink-950 font-sans text-zinc-100">
         <noscript>
           <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-        <JsonLd />
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

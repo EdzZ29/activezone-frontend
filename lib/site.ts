@@ -11,7 +11,7 @@ export const site = {
   shortName: "ActiveZone",
   tagline: "Train Strong. Feel Strong. Be Active.",
   description:
-    "ActiveZone Butuan Fitness Studio — a clean, welcoming, and well-equipped fitness studio in Butuan City. Explore memberships, classes, facilities, and start your fitness journey today.",
+    "ActiveZone Butuan Fitness Studio is a clean, welcoming, and well-equipped fitness studio in Butuan City. Explore memberships, classes, facilities, and start your fitness journey today.",
   // Set NEXT_PUBLIC_SITE_URL to the live domain once it is known (used for SEO/Open Graph URLs).
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 
@@ -51,7 +51,7 @@ export const site = {
     embed: `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=17&output=embed`,
   },
 
-  // Placeholder links — replace "#" with ActiveZone's real profile URLs.
+  // Placeholder links: replace "#" with ActiveZone's real profile URLs.
   social: {
     facebook: "#",
     instagram: "#",

@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand — sampled from the ActiveZone logo */
+  /* Brand: sampled from the ActiveZone logo */
   --color-brand: #89f53d;
   --color-brand-dim: #6fd823;
+  /* Chart marks: brand hue stepped into the dark-mode lightness band (validated) */
+  --color-chart: #4aa315;
 
   /* Gym-inspired neutrals */
   --color-ink-950: #08080a;
@@ -17,8 +19,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-montserrat), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Page container */

@@ -19,7 +19,7 @@ export function WhyActiveZone() {
             eyebrow="Why ActiveZone"
             size="md"
             title={["Why train at", "ActiveZone?"]}
-            description="Everything you need to train consistently — in a space that feels good to walk into."
+            description="Everything you need to train consistently, in a space that feels good to walk into."
           />
         </div>
 

@@ -1,8 +1,8 @@
 /**
  * Editable website content: memberships, classes, coaches, gallery and reviews.
  *
- * Anything marked "placeholder" is not confirmed ActiveZone information yet —
- * replace it with real details before launch.
+ * Anything marked "placeholder" is not confirmed ActiveZone information yet.
+ * Replace it with real details before launch.
  */
 import {
   CalendarClock,
@@ -17,8 +17,8 @@ import {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Builds an Unsplash image URL. These are stock photos used as stand-ins —
- * swap them for ActiveZone's own photos (e.g. "/photos/weights-area.jpg") when available.
+ * Builds an Unsplash image URL. These are stock photos used as stand-ins.
+ * Swap them for ActiveZone's own photos (e.g. "/photos/weights-area.jpg") when available.
  */
 function photo(id: string, opts: { w?: number; h?: number; faces?: boolean } = {}) {
   const { w = 1800, h, faces } = opts;
@@ -154,7 +154,7 @@ export const gallery: GalleryImage[] = [
 export type Plan = {
   id: string;
   name: string;
-  /** Placeholder price — replace "XXX" with the confirmed rate (numbers only, e.g. "150"). */
+  /** Placeholder price: replace "XXX" with the confirmed rate (numbers only, e.g. "150"). */
   price: string;
   period: string;
   summary: string;
@@ -222,7 +222,7 @@ export const classes: FitnessClass[] = [
   {
     id: "zumba",
     name: "Zumba",
-    description: "Dance-based cardio set to upbeat music — high energy, easy to follow.",
+    description: "Dance-based cardio set to upbeat music. High energy and easy to follow.",
     image: photo("photo-1524594152303-9fd13543fe6e", { w: 1200, h: 900 }),
     schedule: TBA,
     coach: TBA,
@@ -262,7 +262,7 @@ export const classes: FitnessClass[] = [
 ];
 
 export const classesNote =
-  "Class offerings and schedules change — message or call us to confirm which sessions are currently running.";
+  "Class offerings and schedules change, so message or call us to confirm which sessions are currently running.";
 
 /* -------------------------------------------------------------------------- */
 /* Coaches (placeholders)                                                     */
@@ -281,25 +281,25 @@ export const trainers: Trainer[] = [
   {
     name: "Coach Name",
     specialty: "Strength Training",
-    bio: "Coach profile coming soon — background, certifications and coaching style.",
+    bio: "Coach profile coming soon: background, certifications and coaching style.",
     image: photo("photo-1567013127542-490d757e51fc", { w: 900, h: 1125, faces: true }),
   },
   {
     name: "Coach Name",
     specialty: "Group Fitness",
-    bio: "Coach profile coming soon — background, certifications and coaching style.",
+    bio: "Coach profile coming soon: background, certifications and coaching style.",
     image: photo("photo-1594381898411-846e7d193883", { w: 900, h: 1125, faces: true }),
   },
   {
     name: "Coach Name",
     specialty: "Functional Training",
-    bio: "Coach profile coming soon — background, certifications and coaching style.",
+    bio: "Coach profile coming soon: background, certifications and coaching style.",
     image: photo("photo-1579758629938-03607ccdbaba", { w: 900, h: 1125, faces: true }),
   },
   {
     name: "Coach Name",
     specialty: "Beginner Coaching",
-    bio: "Coach profile coming soon — background, certifications and coaching style.",
+    bio: "Coach profile coming soon: background, certifications and coaching style.",
     image: photo("photo-1550345332-09e3ac987658", { w: 900, h: 1125, faces: true }),
   },
 ];
@@ -337,7 +337,7 @@ export const experience = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/* Reviews — short excerpts from public Google reviews                        */
+/* Reviews: short excerpts from public Google reviews                        */
 /* -------------------------------------------------------------------------- */
 
 export type Testimonial = {

@@ -1,11 +1,13 @@
 import { ArrowRight, Check, Info } from "lucide-react";
-import { membershipNote, plans } from "@/lib/content";
+import { getWebsitePlans } from "@/lib/api/public-plans";
+import { membershipNote } from "@/lib/content";
 import { site } from "@/lib/site";
 import { ButtonLink } from "./ui/Button";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeading } from "./ui/SectionHeading";
 
-export function MembershipPlans() {
+export async function MembershipPlans() {
+  const plans = await getWebsitePlans();
   return (
     <section id="membership" aria-label="Membership plans" className="bg-ink-900 py-24 md:py-32">
       <div className="shell">

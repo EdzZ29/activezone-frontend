@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
-type Variant = "primary" | "outline" | "ghost" | "dark";
+type Variant = "primary" | "outline" | "ghost" | "dark" | "danger";
 type Size = "md" | "lg";
 
 const base =
@@ -10,6 +10,7 @@ const base =
 const variants: Record<Variant, string> = {
   primary: "clip-corner bg-brand text-ink-950 hover:bg-white",
   dark: "clip-corner bg-ink-950 text-white hover:bg-ink-800",
+  danger: "clip-corner bg-red-400 text-ink-950 hover:bg-red-300",
   outline:
     "border border-white/25 text-white hover:border-brand hover:text-brand backdrop-blur-sm",
   ghost: "text-white hover:text-brand",

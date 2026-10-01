@@ -12,7 +12,7 @@ export function Trainers() {
         <SectionHeading
           eyebrow="Coaches"
           title={["Meet your", "coaches"]}
-          description="Approachable coaches who help members train safely and with purpose — whether it's your first session or your hundredth."
+          description="Approachable coaches who help members train safely and with purpose, whether it's your first session or your hundredth."
         />
 
         <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
